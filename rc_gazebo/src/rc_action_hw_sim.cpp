@@ -41,12 +41,12 @@ void RcRobotHWSim::readSim(ros::Time time, ros::Duration period)
     //    std::uniform_real_distribution<double> dist_poseY_error(0.0, pose_error_ / (pose.Y() - last_poseY_));
     //    cumulative_poseY_error_ += dist_poseY_error(gen);
 
-    action.action_data.yaw_angle = pose.Yaw() + cumulative_angle_error_;
-    action.action_data.pitch_angle = pose.Pitch() + cumulative_angle_error_;
-    action.action_data.roll_angle = pose.Roll() + cumulative_angle_error_;
-    action.action_data.pose_x = pose.X() + cumulative_poseX_error_;
-    action.action_data.pose_y = pose.Y() + cumulative_poseY_error_;
-    action.action_data.yaw_acc = (pose.Yaw() - last_yaw_angle_) / period.toSec();
+    action.action_data.yaw_angle = pose.Rot().Yaw() + cumulative_angle_error_;
+    action.action_data.pitch_angle = pose.Rot().Pitch() + cumulative_angle_error_;
+    action.action_data.roll_angle = pose.Rot().Roll() + cumulative_angle_error_;
+    action.action_data.pose_x = pose.Pos().X() + cumulative_poseX_error_;
+    action.action_data.pose_y = pose.Pos().Y() + cumulative_poseY_error_;
+    action.action_data.yaw_acc = (pose.Rot().Yaw() - last_yaw_angle_) / period.toSec();
 
     //    ROS_INFO_STREAM("action.action_data.yaw_angle: " << action.action_data.yaw_angle);
     //    ROS_INFO_STREAM("action.action_data.pitch_angle: " << action.action_data.pitch_angle);
@@ -55,9 +55,9 @@ void RcRobotHWSim::readSim(ros::Time time, ros::Duration period)
     //    ROS_INFO_STREAM("action.action_data.pose_y: " << action.action_data.pose_y);
     //    ROS_INFO_STREAM("action.action_data.yaw_acc: " << action.action_data.yaw_acc);
 
-    last_yaw_angle_ = pose.Yaw();
-    last_poseX_ = pose.X();
-    last_poseY_ = pose.Y();
+    last_yaw_angle_ = pose.Rot().Yaw();
+    last_poseX_ = pose.Pos().X();
+    last_poseY_ = pose.Pos().Y();
   }
 
   // Set cmd to zero to avoid crazy soft limit oscillation when not controller loaded
