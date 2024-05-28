@@ -5,6 +5,7 @@
 #pragma once
 
 #include <gazebo_ros_control/default_robot_hw_sim.h>
+#include <rc_common/hardware_interface/robot_state_interface.h>
 #include <rc_common/hardware_interface/action_interface.h>
 
 namespace rc_gazebo
@@ -31,6 +32,7 @@ public:
 private:
   void parseAction(XmlRpc::XmlRpcValue& action_sim_datas, const gazebo::physics::ModelPtr& parent_model);
 
+  rc_control::RobotStateInterface robot_state_interface_;
   rc_control::ActionInterface rc_action_sim_interface_;
   gazebo::physics::WorldPtr world_;
   std::vector<ActionSimData> action_sim_datas_;

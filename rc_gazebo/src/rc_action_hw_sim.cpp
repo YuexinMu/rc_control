@@ -11,6 +11,7 @@ bool RcRobotHWSim::initSim(const std::string& robot_namespace, ros::NodeHandle m
                            std::vector<transmission_interface::TransmissionInfo> transmissions)
 {
   bool ret = DefaultRobotHWSim::initSim(robot_namespace, model_nh, parent_model, urdf_model, transmissions);
+  gazebo_ros_control::DefaultRobotHWSim::registerInterface(&robot_state_interface_);
   gazebo_ros_control::DefaultRobotHWSim::registerInterface(&rc_action_sim_interface_);
   XmlRpc::XmlRpcValue xml_rpc_value;
 
